@@ -29,11 +29,10 @@ app.use(
   })
 );
 
-
-app.use(passport.initialize())
-app.use(passport.session())
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

@@ -2,9 +2,21 @@
     <div>
         <h1 class="text-[2vw] font-bold">Connect</h1>
     </div>
+    <% if (user) {%>
+        <div class="flex items-center gap-[30px]">
+            <a class="text-[1.5vw] font-semibold" href="/">Home</a>
+            <a class="text-[1.5vw] font-semibold"  href="/logout-user">Logout</a>
+            <a class="text-[1.5vw] font-semibold"  href="/aboutUs">AboutUs</a>
+        </div>
+   <% } else {%>
     <div class="flex items-center gap-[30px]">
         <a class="text-[1.5vw] font-semibold" href="/">Home</a>
         <a class="text-[1.5vw] font-semibold"  href="/login">Login</a>
         <a class="text-[1.5vw] font-semibold"  href="/aboutUs">AboutUs</a>
-    </div>
+   <% } %>
 </nav>
+
+
+
+
+

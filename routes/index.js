@@ -7,29 +7,63 @@ const LocalStrategy = require("passport-local");
 passport.use(new LocalStrategy(User.authenticate()));
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("index", { user: req.user });
 });
 
 router.get("/login", function (req, res, next) {
-  res.render("login");
+  res.render("login", { user: req.user });
 });
 
 router.get("/register", function (req, res, next) {
-  res.render("register");
+  res.render("register", { user: req.user });
 });
 
-router.get("/profile", function (req, res, next) {
-  res.render("profile");
+router.get("/profile", isLoggedIn, function (req, res, next) {
+  res.render("profile", { user: req.user });
 });
 
-router.post("/register", async function (req, res, next) {
+router.post("/register", async (req, res, next) => {
   try {
-    const user = new User(req.body);
-    await user.save();
-    res.send("user Created");
+    const { username, email, password } = req.body;
+    User.register({ username, email }, password);
+    res.redirect("/login");
   } catch (error) {
     res.send(error);
   }
 });
+
+router.get("/updateUser/:id", (req, res) => {
+  res.render("updateUser", { user: req.user });
+});
+
+router.post(
+  "/login-user",
+  passport.authenticate("local", {
+    successRedirect: "/profile",
+    failureRedirect: "/login",
+  }),
+  function (req, res, next) {}
+);
+
+router.get("/logout-user", (req, res) => {
+  req.logOut(() => {
+    res.redirect("/login");
+  });
+});
+
+
+router.get("/reset-password/:id",(req, res)=>{
+  res.render("resetpassword",{user:req.user})
+})
+
+
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+}
 
 module.exports = router;
