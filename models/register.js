@@ -2,7 +2,12 @@ const mongoose = require("mongoose");
 const plm = require("passport-local-mongoose")
 
 const User = new mongoose.Schema(
+  
   {
+    profilepic:{
+      type:String,
+      default:"profile.png"
+    },
     username: {
       required: [true, "Username is required"],
       minlength: [4, "Username should be 4 characters Long"],
