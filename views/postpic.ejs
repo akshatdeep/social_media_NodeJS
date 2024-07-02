@@ -1,0 +1,36 @@
+<%- include('partials/header.ejs') %>
+<%- include('partials/nav.ejs') %>
+
+<div class="h-[90vh] w-screen pt-1">
+    <form action="/post" class="form-img" enctype="multipart/form-data" method="post">
+        <input type="file" name="media" class="hidden img-input">
+        <div class="post-img h-[50vh] mt-3 w-[20vw] border-[1px] border-black rounded-3xl bg-slate-100 mx-auto cursor-pointer" onclick="document.querySelector('.img-input').click()">
+            <img src="" class="h-full w-full object-cover img-preview" alt="Click to upload">
+        </div>
+        <div class="px-[30vw] mt-4">
+            <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Enter title</label>
+            <input type="text" name="title" id="small-input" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        </div>
+        <button type="submit" class="absolute left-1/2 -translate-x-1/2 top-[40vw] text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Post</button>
+    </form>
+</div>
+
+<script>
+    document.querySelector('.post-img').addEventListener('click', () => {
+        document.querySelector('.img-input').click();
+    });
+
+    document.querySelector('.img-input').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const imgPreview = document.querySelector('.img-preview');
+                imgPreview.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+<%- include('partials/footer.ejs') %>

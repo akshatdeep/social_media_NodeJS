@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-const plm = require("passport-local-mongoose")
+const plm = require("passport-local-mongoose");
 
 const User = new mongoose.Schema(
-  
   {
-    profilepic:{
-      type:String,
-      default:"profile.png"
+    profilepic: {
+      type: String,
+      default: "profile.png",
     },
     username: {
       required: [true, "Username is required"],
@@ -23,16 +22,15 @@ const User = new mongoose.Schema(
         "Please fill a valid email address",
       ],
     },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
     password: {
-        type:String
-    }
+      type: String,
+    },
   },
   { timestamps: true }
 );
 
-
-User.plugin(plm)
-
+User.plugin(plm);
 
 const newuser = mongoose.model("UserRegister", User);
 
